@@ -45,4 +45,45 @@ use crate::color::Color;
 /// See the file script for an example of the file format
 pub fn parse_file( fname: String, points: Matrix, transform: Matrix, screen: Image, color: Color ){
     
+    let file = File::open(&fname)?;
+    let reader = BufReader::new(file);
+    let mut doc_lines = vec![String::new(); 0];
+    let mut i = 0;
+    
+    for line in reader.lines(){
+        doc_lines.push(line?);
+    }
+
+    while i < doc_lines.len(){
+        match &*doc_lines[i]{
+            "line"=>{
+            }
+            "ident"=>{
+            }
+            "scale"=>{
+            }
+            "translate"=>{
+
+            }
+            "rotate"=>{
+
+            }
+            "apply"=>{
+
+            }
+            "display"=>{
+
+            }
+            "save"=>{
+
+            }
+            "quit"=>{
+
+            }
+            _=>{
+            }
+        }
+        i += 1;
+    }
+    Ok(())
 }

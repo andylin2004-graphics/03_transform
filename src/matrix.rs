@@ -10,6 +10,9 @@ impl Matrix{
         Matrix{matrix_array: vec![vec![0.0; col]; row],}
     }
 
+    /// multiply m1 by the object that this is called on, modifying this object to be the product
+    /// 
+    /// m1 * this object -> this object
     pub fn multiply_matrixes(&mut self, m1: Matrix){
         let mut matrix_result = Matrix::new(m1.matrix_array.len(), self.matrix_array[0].len());
         for result_i in 0..matrix_result.matrix_array.len(){

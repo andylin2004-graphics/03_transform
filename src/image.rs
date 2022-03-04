@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::Path;
-use crate::Color;
+use crate::color::Color;
 
 pub struct Image{
     pub screen: Vec<Vec<Color>>,

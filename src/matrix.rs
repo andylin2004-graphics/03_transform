@@ -1,4 +1,5 @@
 use std::fmt;
+use std::f32;
 
 pub struct Matrix{
     pub(in crate) matrix_array: Vec<Vec<f32>>,
@@ -59,10 +60,10 @@ impl Matrix{
     pub fn make_rotX(mut theta: f32 ) -> Matrix{
         let mut matrix = Matrix::new(4, 4);
         matrix.identity();
-        let theta /= 360 * 2 * f32::consts::PI;
-        matrix.matrix_array[1][1] = theta::cos();
-        matrix.matrix_array[1][2] = theta::sin() * -1;
-        matrix.matrix_array[2][1] = matrix.matrix_array[1][2] * -1;
+        theta /= 360.0 * 2.0 * f32::consts::PI;
+        matrix.matrix_array[1][1] = theta.cos();
+        matrix.matrix_array[1][2] = theta.sin() * -1.0;
+        matrix.matrix_array[2][1] = matrix.matrix_array[1][2] * -1.0;
         matrix.matrix_array[2][2] = matrix.matrix_array[1][1];
         return matrix;
     }
@@ -70,21 +71,21 @@ impl Matrix{
     pub fn make_rotY( mut theta: f32 ) -> Matrix{
         let mut matrix = Matrix::new(4, 4);
         matrix.identity();
-        theta /= 360 * 2 * f32::consts::PI;
-        matrix.matrix_array[0][0] = theta::cos();
-        matrix.matrix_array[0][3] = theta::sin();
-        matrix.matrix_array[2][0] = matrix.matrix_array[0][3] * -1;
+        theta /= 360.0 * 2.0 * f32::consts::PI;
+        matrix.matrix_array[0][0] = theta.cos();
+        matrix.matrix_array[0][3] = theta.sin();
+        matrix.matrix_array[2][0] = matrix.matrix_array[0][3] * -1.0;
         matrix.matrix_array[2][3] = matrix.matrix_array[1][1];
         return matrix;
     }
 
-    pub fn make_rotZ( theta: f32 ) -> Matrix{
+    pub fn make_rotZ( mut theta: f32 ) -> Matrix{
         let mut matrix = Matrix::new(4, 4);
         matrix.identity();
-        theta /= 360 * 2 * f32::consts::PI;
-        matrix.matrix_array[0][0] = theta::cos();
-        matrix.matrix_array[0][1] = theta::sin() * -1;
-        matrix.matrix_array[1][0] = matrix.matrix_array[0][1] * -1;
+        theta /= 360.0 * 2.0 * f32::consts::PI;
+        matrix.matrix_array[0][0] = theta.cos();
+        matrix.matrix_array[0][1] = theta.sin() * -1.0;
+        matrix.matrix_array[1][0] = matrix.matrix_array[0][1] * -1.0;
         matrix.matrix_array[1][1] = matrix.matrix_array[0][0];
         return matrix;
     }

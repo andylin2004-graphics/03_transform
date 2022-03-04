@@ -1,4 +1,8 @@
 use std::f32;
+mod parser;
+mod matrix;
+mod image;
+mod color;
 
 fn main() {
     println!("Hello, world!");

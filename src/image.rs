@@ -2,6 +2,7 @@ use std::fs::File;
 use std::io::prelude::*;
 use std::path::Path;
 use crate::color::Color;
+use std::process::Command;
 
 pub struct Image{
     pub screen: Vec<Vec<Color>>,
@@ -34,7 +35,7 @@ impl Image{
         return result;
     }
 
-    pub fn create_file(&self, file_name: String){
+    pub fn create_file(&self, file_name: &str){
         let path = Path::new(&file_name);
 
         let mut file = match File::create(&path){
@@ -48,5 +49,21 @@ impl Image{
             Err(error) => panic!("failed to write image file because {}", error),
             Ok(_) => {},
         };
+    }
+
+    pub fn clear(&mut self){
+        for i in 0..self.screen.len(){
+            for v in 0..self.screen[0].len(){
+                self.screen[i][v].reset_color();
+            }
+        }
+    }
+
+    pub fn display(&mut self){
+        self.create_file("/tmp/imageDisplay.ppm");
+        Command::new("open")
+        .arg("/tmp/imageDisplay.ppm")
+        .spawn()
+        .expect("failed to open image");
     }
 }

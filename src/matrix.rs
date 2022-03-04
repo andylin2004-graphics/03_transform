@@ -1,6 +1,7 @@
 use std::fmt;
 use std::f32;
 
+#[derive(Clone)]
 pub struct Matrix{
     pub(in crate) matrix_array: Vec<Vec<f32>>,
 }

@@ -21,6 +21,12 @@ impl Color{
         self.g = new_color.g;
         self.b = new_color.b;
     }
+    
+    pub fn reset_color(&mut self){
+        self.r = 0;
+        self.b = 0;
+        self.g = 0;
+    }
 }
 
 impl fmt::Display for Color{

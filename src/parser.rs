@@ -45,7 +45,7 @@ use crate::color::Color;
 ///          quit: end parsing
 ///
 /// See the file script for an example of the file format
-pub fn parse_file( fname: &str, mut points: Matrix, mut transform: Matrix, screen: Image, color: Color ) -> io::Result<()>{
+pub fn parse_file( fname: &str, mut points: Matrix, mut transform: Matrix, mut screen: Image, color: Color ) -> io::Result<()>{
     let file = File::open(&fname)?;
     let reader = BufReader::new(file);
     let mut doc_lines = vec![String::new(); 0];
@@ -77,7 +77,7 @@ pub fn parse_file( fname: &str, mut points: Matrix, mut transform: Matrix, scree
 
                 transform.multiply_matrixes(Matrix::make_scale(params[0], params[1], params[2]));
             }
-            "translate"=>{
+            "translate" | "move"=>{
                 i += 1;
                 let mut params = vec![0; 0];
                 for input in doc_lines[i].split(' '){
@@ -87,22 +87,44 @@ pub fn parse_file( fname: &str, mut points: Matrix, mut transform: Matrix, scree
                 transform.multiply_matrixes(Matrix::make_translate(params[0], params[1], params[2]));
             }
             "rotate"=>{
+                i += 1;
+                let mut params = vec![""; 0];
+                for input in doc_lines[i].split(' '){
+                    params.push(input);
+                }
 
+                match params[0]{
+                    "x"=>{
+                        transform.multiply_matrixes(Matrix::make_rotX(params[1].parse().unwrap()));
+                    }
+                    "y"=>{
+                        transform.multiply_matrixes(Matrix::make_rotY(params[1].parse().unwrap()));
+                    }
+                    "z"=>{
+                        transform.multiply_matrixes(Matrix::make_rotZ(params[1].parse().unwrap()));
+                    }
+                    _=>{
+                        panic!("Invalid input {} at 0 for rotation: please use x, y, or z.", params[0]);
+                    }
+                }
             }
             "apply"=>{
-
+                points.multiply_matrixes(transform.clone());
             }
             "display"=>{
-
+                screen.clear();
+                screen.draw_lines(points.clone(), color);
+                screen.display();
             }
             "save"=>{
-
+                i += 1;
+                screen.create_file(&*doc_lines[i]);
             }
             "quit"=>{
-
+                break;
             }
             _=>{
-                panic!("Invalid command {}", doc_lines[i]);
+                panic!("Invalid command {} at line {}.", doc_lines[i], i+1);
             }
         }
         i += 1;

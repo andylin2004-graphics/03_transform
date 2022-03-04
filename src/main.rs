@@ -8,6 +8,7 @@ mod parser;
 mod matrix;
 mod image;
 mod color;
+mod draw;
 
 fn main() {
     // println!("Hello, world!");

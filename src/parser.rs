@@ -1,3 +1,5 @@
+use std::io::{BufReader, self, prelude::*};
+use std::fs::File;
 use crate::matrix::Matrix;
 use crate::image::Image;
 use crate::color::Color;
@@ -43,8 +45,7 @@ use crate::color::Color;
 ///          quit: end parsing
 ///
 /// See the file script for an example of the file format
-pub fn parse_file( fname: String, points: Matrix, transform: Matrix, screen: Image, color: Color ){
-    
+pub fn parse_file( fname: &str, mut points: Matrix, mut transform: Matrix, screen: Image, color: Color ) -> io::Result<()>{
     let file = File::open(&fname)?;
     let reader = BufReader::new(file);
     let mut doc_lines = vec![String::new(); 0];
@@ -57,13 +58,33 @@ pub fn parse_file( fname: String, points: Matrix, transform: Matrix, screen: Ima
     while i < doc_lines.len(){
         match &*doc_lines[i]{
             "line"=>{
+                i += 1;
+                let mut params = vec![0.0; 0];
+                for input in doc_lines[i].split(' '){
+                    params.push(input.parse().unwrap());
+                }
+                points.add_edge(params[0], params[1], params[2], params[3], params[4], params[5]);
             }
             "ident"=>{
+                transform.identity();
             }
             "scale"=>{
+                i += 1;
+                let mut params = vec![0.0; 0];
+                for input in doc_lines[i].split(' '){
+                    params.push(input.parse().unwrap());
+                }
+
+                transform.multiply_matrixes(Matrix::make_scale(params[0], params[1], params[2]));
             }
             "translate"=>{
+                i += 1;
+                let mut params = vec![0; 0];
+                for input in doc_lines[i].split(' '){
+                    params.push(input.parse().unwrap());
+                }
 
+                transform.multiply_matrixes(Matrix::make_translate(params[0], params[1], params[2]));
             }
             "rotate"=>{
 
@@ -81,6 +102,7 @@ pub fn parse_file( fname: String, points: Matrix, transform: Matrix, screen: Ima
 
             }
             _=>{
+                panic!("Invalid command {}", doc_lines[i]);
             }
         }
         i += 1;

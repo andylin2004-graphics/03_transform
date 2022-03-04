@@ -37,6 +37,57 @@ impl Matrix{
     pub fn print_matrix(&self){
         println!("{}", self);
     }
+
+    pub fn make_translate(x: i32, y: i32, z: i32) -> Matrix{
+        let mut matrix = Matrix::new(4, 4);
+        matrix.identity();
+        matrix.matrix_array[0][3] = x as f32;
+        matrix.matrix_array[1][3] = y as f32;
+        matrix.matrix_array[2][3] = z as f32;
+        return matrix;
+    }
+
+    pub fn make_scale( x: f32, y: f32, z: f32) -> Matrix{
+        let mut matrix = Matrix::new(4, 4);
+        matrix.matrix_array[0][0] = x as f32;
+        matrix.matrix_array[1][1] = y as f32;
+        matrix.matrix_array[2][2] = z as f32;
+        matrix.matrix_array[3][3] = 1.0;
+        return matrix;
+    }
+
+    pub fn make_rotX(mut theta: f32 ) -> Matrix{
+        let mut matrix = Matrix::new(4, 4);
+        matrix.identity();
+        let theta /= 360 * 2 * f32::consts::PI;
+        matrix.matrix_array[1][1] = theta::cos();
+        matrix.matrix_array[1][2] = theta::sin() * -1;
+        matrix.matrix_array[2][1] = matrix.matrix_array[1][2] * -1;
+        matrix.matrix_array[2][2] = matrix.matrix_array[1][1];
+        return matrix;
+    }
+
+    pub fn make_rotY( mut theta: f32 ) -> Matrix{
+        let mut matrix = Matrix::new(4, 4);
+        matrix.identity();
+        theta /= 360 * 2 * f32::consts::PI;
+        matrix.matrix_array[0][0] = theta::cos();
+        matrix.matrix_array[0][3] = theta::sin();
+        matrix.matrix_array[2][0] = matrix.matrix_array[0][3] * -1;
+        matrix.matrix_array[2][3] = matrix.matrix_array[1][1];
+        return matrix;
+    }
+
+    pub fn make_rotZ( theta: f32 ) -> Matrix{
+        let mut matrix = Matrix::new(4, 4);
+        matrix.identity();
+        theta /= 360 * 2 * f32::consts::PI;
+        matrix.matrix_array[0][0] = theta::cos();
+        matrix.matrix_array[0][1] = theta::sin() * -1;
+        matrix.matrix_array[1][0] = matrix.matrix_array[0][1] * -1;
+        matrix.matrix_array[1][1] = matrix.matrix_array[0][0];
+        return matrix;
+    }
 }
 
 impl fmt::Display for Matrix{

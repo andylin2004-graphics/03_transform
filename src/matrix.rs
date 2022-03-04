@@ -77,9 +77,9 @@ impl Matrix{
         matrix.identity();
         theta = theta.to_radians();
         matrix.matrix_array[0][0] = theta.cos();
-        matrix.matrix_array[0][3] = theta.sin();
-        matrix.matrix_array[2][0] = matrix.matrix_array[0][3] * -1.0;
-        matrix.matrix_array[2][3] = matrix.matrix_array[1][1];
+        matrix.matrix_array[0][2] = theta.sin();
+        matrix.matrix_array[2][0] = matrix.matrix_array[0][2] * -1.0;
+        matrix.matrix_array[2][2] = matrix.matrix_array[0][0];
         return matrix;
     }
 

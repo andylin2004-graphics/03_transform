@@ -1,9 +1,7 @@
-use std::f32;
 use parser::parse_file;
 use image::Image;
 use color::Color;
 use matrix::Matrix;
-use std::result::Result;
 mod parser;
 mod matrix;
 mod image;

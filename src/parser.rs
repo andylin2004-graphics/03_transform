@@ -76,7 +76,7 @@ pub fn parse_file( fname: &str, mut points: Matrix, mut transform: Matrix, mut s
                     params.push(input.parse().unwrap());
                 }
 
-                transform.multiply_matrixes(Matrix::make_scale(params[0], params[1], params[2]));
+                transform.multiply_matrixes(&Matrix::make_scale(params[0], params[1], params[2]));
             }
             "translate" | "move"=>{
                 i += 1;
@@ -85,7 +85,7 @@ pub fn parse_file( fname: &str, mut points: Matrix, mut transform: Matrix, mut s
                     params.push(input.parse().unwrap());
                 }
 
-                transform.multiply_matrixes(Matrix::make_translate(params[0], params[1], params[2]));
+                transform.multiply_matrixes(&Matrix::make_translate(params[0], params[1], params[2]));
             }
             "rotate"=>{
                 i += 1;
@@ -96,13 +96,13 @@ pub fn parse_file( fname: &str, mut points: Matrix, mut transform: Matrix, mut s
 
                 match params[0]{
                     "x"=>{
-                        transform.multiply_matrixes(Matrix::make_rotX(params[1].parse().unwrap()));
+                        transform.multiply_matrixes(&Matrix::make_rotX(params[1].parse().unwrap()));
                     }
                     "y"=>{
-                        transform.multiply_matrixes(Matrix::make_rotY(params[1].parse().unwrap()));
+                        transform.multiply_matrixes(&Matrix::make_rotY(params[1].parse().unwrap()));
                     }
                     "z"=>{
-                        transform.multiply_matrixes(Matrix::make_rotZ(params[1].parse().unwrap()));
+                        transform.multiply_matrixes(&Matrix::make_rotZ(params[1].parse().unwrap()));
                     }
                     _=>{
                         panic!("Invalid input {} at 0 for rotation: please use x, y, or z.", params[0]);
@@ -110,11 +110,11 @@ pub fn parse_file( fname: &str, mut points: Matrix, mut transform: Matrix, mut s
                 }
             }
             "apply"=>{
-                points.multiply_matrixes(transform.clone());
+                points.multiply_matrixes(&transform);
             }
             "display"=>{
                 screen.clear();
-                screen.draw_lines(points.clone(), color);
+                screen.draw_lines(&points, color);
                 screen.display();
             }
             "save"=>{

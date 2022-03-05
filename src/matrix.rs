@@ -1,7 +1,6 @@
 use std::fmt;
 use std::f32;
 
-#[derive(Clone)]
 pub struct Matrix{
     pub(in crate) matrix_array: Vec<Vec<f32>>,
 }
@@ -14,7 +13,7 @@ impl Matrix{
     /// multiply m1 by the object that this is called on, modifying this object to be the product
     /// 
     /// m1 * this object -> this object
-    pub fn multiply_matrixes(&mut self, m1: Matrix){
+    pub fn multiply_matrixes(&mut self, m1: &Matrix){
         let mut matrix_result = Matrix::new(m1.matrix_array.len(), self.matrix_array[0].len());
         for result_i in 0..matrix_result.matrix_array.len(){
             for result_v in 0..matrix_result.matrix_array[result_i].len(){

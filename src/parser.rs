@@ -3,6 +3,7 @@ use std::fs::File;
 use crate::matrix::Matrix;
 use crate::image::Image;
 use crate::color::Color;
+use std::process::Command;
 
 /// Goes through the file named filename and performs all of the actions listed in that file.
 /// 
@@ -119,6 +120,12 @@ pub fn parse_file( fname: &str, mut points: Matrix, mut transform: Matrix, mut s
             "save"=>{
                 i += 1;
                 screen.create_file(&*doc_lines[i]);
+                Command::new("magick")
+                .arg("convert")
+                .arg(&*doc_lines[i])
+                .arg(&*doc_lines[i])
+                .spawn()
+                .expect("failed to convert image to desired format");
             }
             "quit"=>{
                 break;

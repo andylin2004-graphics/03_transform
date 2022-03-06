@@ -118,6 +118,8 @@ pub fn parse_file( fname: &str, mut points: Matrix, mut transform: Matrix, mut s
                 screen.display();
             }
             "save"=>{
+                screen.clear();
+                screen.draw_lines(&points, color);
                 i += 1;
                 screen.create_file(&*doc_lines[i]);
                 Command::new("magick")

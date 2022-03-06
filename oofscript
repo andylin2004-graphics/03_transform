@@ -109,6 +109,10 @@ rotate
 x 45
 rotate
 y 30
+scale
+1.5 1.5 1.5
+move
+-75 0 -50
 apply
 display
 save

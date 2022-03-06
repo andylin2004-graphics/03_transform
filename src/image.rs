@@ -16,7 +16,7 @@ impl Image{
     }
 
     pub fn plot(&mut self, x: i32, y: i32, color: Color){
-        if x >= 0 && y >= 0{
+        if x >= 0 && y >= 0 && x < self.width as i32&& y < self.height as i32{
             self.screen[(self.height - 1) - y as usize][x as usize].plot_color(color);
         }
     }

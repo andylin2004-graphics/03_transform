@@ -16,4 +16,9 @@ fn main() {
     let mut edges = Matrix::new(0,0);
     let mut transform = Matrix::new(4,4);
     parse_file("script", edges, transform, screen, color);
+    screen = Image::new(500, 500);
+    color = Color::new_color(0, 255, 0);
+    edges = Matrix::new(0,0);
+    transform = Matrix::new(4,4);
+    parse_file("oofscript", edges, transform, screen, color);
 }

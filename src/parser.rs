@@ -46,7 +46,7 @@ use std::process::Command;
 ///          quit: end parsing
 ///
 /// See the file script for an example of the file format
-pub fn parse_file( fname: &str, mut points: Matrix, mut transform: Matrix, mut screen: Image, color: Color ) -> io::Result<()>{
+pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, screen: &mut Image, color: Color ) -> io::Result<()>{
     let file = File::open(&fname)?;
     let reader = BufReader::new(file);
     let mut doc_lines = vec![String::new(); 0];
